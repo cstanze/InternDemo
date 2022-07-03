@@ -1,3 +1,4 @@
+/* List styling (similar to PDF example) */
 .ExList {
   display: flex;
   flex-direction: column;
@@ -9,6 +10,7 @@
   margin: 10px;
 }
 
+/* Follows the same loose guide on the PDF */
 .ExListName {
   margin: 0;
   margin-top: 5px;
@@ -16,6 +18,7 @@
   align-self: flex-start;
 }
 
+/* also loose styling here, makes it cleaner too */
 .ExListItems {
   margin: 5px 0 5px 0;
   padding: 0;
@@ -30,20 +33,20 @@
   content: '';
 }
 
-.ExListHandle,
-.ExListShowLess {
+/* Hide the checkbox but modify the label (sort of) */
+.ExListHandle {
   visibility: hidden;
   width: 100%;
   font-size: 1rem;
   text-align: center;
 }
 
-/* 11 items or less */
+/* Hide label on 11 items or less */
 .ExListItems > li:nth-last-child(-n+11):first-child ~ .ExListHandleLabel {
   display: none;
 }
 
-/* More than 11 items */
+/* Show label on More than 11 items */
 .ExListItems > li:nth-last-child(n+10) ~ li + .ExListHandleLabel {
   display: block;
 }
@@ -58,7 +61,7 @@
   display: none;
 }
 
-/* Show more / Show less Label */
+/* Label */
 .ExListHandleLabel:after {
   margin-top: 10px;
   text-align: center;
@@ -76,3 +79,11 @@
   content: 'Show less';
   margin-left: 5px;
 }
+
+/*
+  I won't lie, that part above took me longer than I'd like.
+  Main reason being that I didn't use labels before. They're
+  not as clean because of all the IDs involved but it works
+  and could be adapted to work in a production scenario
+ */
+

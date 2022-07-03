@@ -1,3 +1,4 @@
+// Simple application state
 let AppState = {
   mode: AppModes.Normal,
   linkItems: [],
@@ -7,6 +8,7 @@ let AppState = {
   editingIndex: -1
 }
 
+// Setup local storage for link items
 let rawLinkItems = localStorage.getItem('user.linkItems')
 
 if (rawLinkItems == null || rawLinkItems == '') {
@@ -22,6 +24,7 @@ if (!(linkItems instanceof Array)) {
 
 AppState.linkItems = linkItems
 
+// Get the menu element
 const queryMenu = () => {
   let moreItem = document.querySelector('.MoreItem')
   let selector = moreItem.getAttribute('data-menu')
@@ -30,6 +33,7 @@ const queryMenu = () => {
   return menu
 }
 
+// Get the popout element
 const queryPopout = () => {
   let moreItem = document.querySelector('.MoreItem')
   let selector = moreItem.getAttribute('data-popout')
@@ -38,18 +42,21 @@ const queryPopout = () => {
   return popout
 }
 
+// Menu distance from origin point
 const MenuDistance = 10
 
 const render = (target) => {
   let menu = queryMenu()
   let popout = queryPopout()
 
+  // Oddly complex logic for toggling hidden status
   if (!popout.classList.contains('Hidden') && AppState.mode == AppModes.Normal)
     return popout.classList.add('Hidden')
   
   if (popout.classList.contains('Hidden'))
     popout.classList.remove('Hidden')
   
+  // Calculate popout positioning
   let parentCoords = target.getBoundingClientRect(),
     left, top
   
@@ -67,6 +74,7 @@ const render = (target) => {
     return; // don't render menu items if not in open mode
   }
 
+  // hide elements in edit mode
   modifyStyleIf(
     'display',
     _ => 'none',
@@ -75,6 +83,7 @@ const render = (target) => {
     document.querySelectorAll('.MoreMenuHide')
   );
 
+  // show elements in edit mode
   modifyStyleIf(
     'display',
     _ => 'none',
@@ -83,6 +92,7 @@ const render = (target) => {
     document.querySelectorAll('.MoreMenuShow')
   )
 
+  // create the form section for Adding/Editing link items
   let mutatingSection = document.querySelector('.MoreMutableInteractable')
   if (AppState.mode = AppModes.Open) {
     clearElementChildren(mutatingSection)
@@ -194,8 +204,11 @@ const render = (target) => {
     appendElements(mutatingSection, [sectionLabel, dynamicForm, controls])
   }
 
+  
+  // clear all the link items for rendering
   clearElementChildren(menu)
 
+  // render all the links
   let i = 0
   for (const linkItem of AppState.linkItems) {
     // Hide disabled items if not editing
@@ -246,14 +259,14 @@ const render = (target) => {
 
     // fuzzy match on classes available on parents or children
     inner.addEventListener('click', e => {
-      if (anyParentHasClass(e.target, 'LinkItemCheck')) {
+      if (anyParentHasClass(e.target, 'LinkItemCheck')) { // enable/disable checkmark
         linkItem.enabled = e.target.checked
         localStorage.setItem('user.linkItems', JSON.stringify(AppState.linkItems))
 
         icon.innerText = linkItem.enabled ? "drag_indicator" : "delete"
       }
 
-      if (anyChildHasClass(e.target, 'material-symbols-rounded') && AppState.editable) {
+      if (anyChildHasClass(e.target, 'material-symbols-rounded') && AppState.editable) { // delete functionality
         let id = inner.getAttribute('data-index')
         if (!AppState.linkItems[id].enabled) {
           AppState.linkItems.splice(id, 1)
@@ -263,6 +276,7 @@ const render = (target) => {
       }
 
 
+      // toggle link editing on every click
       if (AppState.addingItem) {
         AppState.editingIndex = inner.getAttribute('data-index')
       } else {
@@ -277,11 +291,15 @@ const render = (target) => {
   }
 }
 
+// shopify sortable is really useful!
 AppState.draggable = new Sortable.default(queryMenu(), {
   draggable: '.LinkItem',
   handle: '.LinkItemGrabber'
 })
 
+// disable dragging when not editing for if the item is disabled
+// BUG: if another enabled item is dragged past a disabled one,
+//      it will moved the disabled item.
 AppState.draggable.on('drag:start', e => {
   if (!AppState.editable) {
     e.cancel()
@@ -295,6 +313,7 @@ AppState.draggable.on('drag:start', e => {
   }
 })
 
+// register re-orderings
 AppState.draggable.on('drag:stopped', () => {
   let linkItems = []
   for (const el of queryMenu().children) {
@@ -306,6 +325,7 @@ AppState.draggable.on('drag:stopped', () => {
   render(document.querySelector('.MoreItem'))
 })
 
+// popout control
 document.querySelector('.MoreItem').addEventListener('click', e => {
   if (AppState.mode != AppModes.Normal) {
     AppState.mode = AppModes.Normal
@@ -318,6 +338,7 @@ document.querySelector('.MoreItem').addEventListener('click', e => {
   render(e.target)
 })
 
+// editing control
 document.querySelector('.CustomiseItem').addEventListener('click', e => {
   AppState.editable = true
   AppState.addingItem = true
@@ -325,8 +346,8 @@ document.querySelector('.CustomiseItem').addEventListener('click', e => {
   render(document.querySelector('.MoreItem'))
 })
 
-document.body.addEventListener('click', e => {
-  
+// extra popout control (if clicked out, close)
+document.body.addEventListener('click', e => { 
   // if we click outside of the menu, close it
   if (AppState.mode == AppModes.Open) {
     if (anyParentHasClass(e.target, 'MorePopout') || anyParentHasClass(e.target, 'MenuItem')) {
