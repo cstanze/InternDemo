@@ -1,0 +1,280 @@
+/* Generic body styles */
+body {
+  height: 100vh;
+  font-family: sans-serif;
+
+  margin: 0;
+  padding: 0;
+  background-color: #ffffff;
+  color: #1f1f1f;
+
+  display: flex;
+  flex-direction: column;
+
+  /* Dark/Light mode transitions */
+  transition: background-color 0.5s ease-in-out;
+  transition: color 0.5s ease-in-out;
+
+  /* Color vars for easier Dark/Light mode transitions */
+  --primary: #ffc95e;
+  --background: #ffffff;
+  --text: #1f1f1f;
+
+  /* HSL versions of the above colors */
+  --primary-hsl: 48, 100%, 50%;
+  --bg-hsl: 0, 0%, 95%;
+  --text-hsl: 0, 0%, 12%;
+}
+
+@media screen and (prefers-color-scheme: dark) {
+  body {
+    background-color: #1f1f1f;
+    color: #ffffff;
+
+    transition: background-color 0.5s ease-in-out;
+    transition: color 0.5s ease-in-out;
+
+    /* Updated colors when in Dark mode */
+    --background: #1f1f1f;
+    --text: #ffffff;
+    --bg-hsl: 0, 0%, 12%;
+    --text-hsl: 0, 0%, 95%;
+  }
+}
+
+/* Overrides */
+
+.material-symbols-rounded {
+  margin: 0 !important; /* override material-icons-rounded */
+}
+
+/* Menu button and "PoC" Navigator bar */
+
+.Navigator {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+
+  margin: 5px;
+  padding: 5px;
+}
+
+.MenuItem {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  margin: 0;
+  padding: 5px 0 5px 7.5px;
+  border-bottom: 2px solid hsl(var(--primary-hsl));
+  cursor: pointer;
+  user-select: none;
+}
+
+.MenuItem > span {
+  margin-right: 5px;
+}
+
+/* Popout */
+
+.Popout {
+  border-radius: 6px;
+  box-shadow: 0 0 10px hsl(var(--text-hsl), 0.25);
+  overflow: hidden;
+  min-width: 11%;
+  position: absolute;
+}
+
+/* Simple divider styling, nothing too crazy here */
+.PopoutDivider {
+  border-top-color: hsl(var(--text-hsl), 0.2);
+}
+
+/* Link menu items */
+.LinkItemInner {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  margin: 0;
+  padding: 8px;
+  border-radius: 10px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.LinkItemInner > .LinkItemRight > span {
+  opacity: 0;
+}
+
+.LinkItemInner:hover > .LinkItemRight > span {
+  opacity: 1;
+}
+
+.LinkItem:hover,
+.MoreMenuItem:not(.NoHover):hover {
+  background-color: hsl(var(--text-hsl), 0.1);
+}
+
+/*
+  I went with the split approach to item layout,
+  using flexbox containers to make it more responsive
+*/
+.LinkItemLeft,
+.LinkItemRight {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  margin: 0;
+  border-radius: 10px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.LinkItemName {
+  color: var(--text);
+  text-decoration: none;
+}
+
+.LinkItemGrabber:not(.Hidden) {
+  cursor: grab;
+}
+
+.LinkItemIcon {
+  width: 1rem;
+  height: 1rem;
+  margin-right: 10px;
+}
+
+/* Other menu items (Hide filters, Customise Menu) */
+.MoreMenuItem {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-size: 0.9rem;
+  margin: 0;
+  padding: 8px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.MoreMenuLabel {
+  margin-left: 10px;
+}
+
+.MoreMenuIcon {
+  font-size: 1rem; 
+}
+
+/* Checkmark styles */
+
+.LinkItemCheck {
+  position: absolute;
+  opacity: 0;
+  z-index: -1;
+}
+
+.LinkItemCheck ~ span {
+  cursor: pointer;
+}
+
+.LinkItemCheck ~ span:before {
+  content: '';
+  border: 1px solid hsl(var(--text-hsl), 0.25);
+  border-radius: 4px;
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+  margin-right: 0.5em;
+  vertical-align: -2px;
+}
+
+.LinkItemCheck:checked ~ span:before {
+  background-image: url('/assets/check.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 25px;
+  border-radius: 2px;
+  background-color: #8dc26a;
+  color: white;  
+}
+
+.LinkItemCheck:focus ~ span:before {
+  box-shadow: 0px 0px 0px 1px rgba(0, 150, 255, 1);
+  outline-color: transparent;
+  outline-width: 1px;
+  outline-style: dotted;
+}
+
+.LinkItemCheck:disabled ~ span {
+  cursor: default;
+  color: black;
+  opacity: 0.5;
+}
+
+/* Add/Edit form styles */
+
+.DyanmicLinkForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Form item */
+.MutableFormItem {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.9rem;
+  margin: 0;
+  padding: 8px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.MutableFormItem > label {
+  margin-bottom: 5px;
+}
+
+.MutableFormItem > input,
+.MutableFormItem > textarea {
+  font-family: inherit;
+  border-radius: 5px;
+  border: 1px solid hsl(var(--text-hsl), 0.25);
+  padding: 5px;
+}
+
+.MutableFormItem > input,
+.MutableFormItem > textarea,
+.MutableFormItem > label {
+  display: flex;
+  resize: none;
+}
+
+/* Form Control (Save/Add, Cancel) */
+.MutableMenuControls {
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.MutableMenuButton {
+  width: 40%;
+  height: 35px;
+  border-radius: 5px;
+  background-color: transparent;
+  cursor: pointer;
+  user-select: none;
+  border: 1px solid hsl(var(--text-hsl), 0.25);
+  font-size: 0.9rem;
+}
+
+/* Primary color for controls */
+.MutableMenuPrimary {
+  background-color: var(--primary);
+  border: none;
+}

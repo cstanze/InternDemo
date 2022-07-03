@@ -1,0 +1,10 @@
+/* Hide the original element being dragged */
+.draggable-source--is-dragging {
+  opacity: 0;
+}
+
+/* Hide the checkmark and grabber on the mirror */
+.draggable-mirror > .LinkItemInner > .LinkItemLeft > .LinkEnableCheck,
+.draggable-mirror > .LinkItemInner > .LinkItemRight {
+  opacity: 0;
+}

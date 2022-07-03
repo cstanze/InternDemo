@@ -1,0 +1,33 @@
+.Active {
+  border-bottom: 2px solid var(--primary);
+}
+
+.NoHover {
+  cursor: default !important;
+}
+
+/* Hiding Elements */
+.Hidden[data-hidden="display"] {
+  display: none;
+}
+
+.Hidden:not([data-hidden="display"]) {
+  opacity: 0;
+}
+
+/* Errors */
+.ErrMsg {
+  display: none;
+}
+
+.Error {
+  border: 1px solid red !important;
+}
+
+.Error ~ .ErrMsg {
+  display: block;
+  color: red;
+  font-size: 0.7rem;
+  font-weight: bold;
+  margin-top: 5px;
+}

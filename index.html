@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Demo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    
+    <!-- Not sure if this counts as an extra library, I couldn't exactly use Nerd Fonts ;p -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20,300,0,0" />
+    <link rel="stylesheet" href="./css/App.css">
+    <link rel="stylesheet" href="./css/DraggableExt.css">
+    <link rel="stylesheet" href="./css/Utils.css">
+    <link rel="stylesheet" href="./css/Expandable.css">
+  </head>
+  <body>
+    <h1 style="margin-left: 1rem;">Navigator</h1>
+    <div class="Navigator">
+      <!-- Here is where the actual interesting stuff is -->
+      <span data-menu="div.MorePopout > .PopoutLinkList" data-popout="div.MorePopout" class="MenuItem MoreItem">
+        More <span class="material-symbols-rounded">more_vert</span>
+      </span>
+    </div>
+
+    <div class="Popout Hidden MorePopout" data-hidden="display">
+      <div class="MoreMenuItem MoreMenuHide MoreFlex" style="padding-top: 15px;">
+        <span class="material-symbols-rounded MoreMenuIcon">visibility_off</span>
+        <span class="MoreMenuLabel">Hide Filters</span>
+      </div>
+      <hr class="PopoutDivider MoreMenuHide" />
+      <span class="MoreMenuShow MoreMenuItem NoHover">
+        <b>Edit search menu</b>
+      </span>
+      <div class="PopoutLinkList">
+      </div>
+      <hr class="PopoutDivider" />
+      <div class="MoreMenuItem CustomiseItem MoreMenuHide MoreFlex" style="padding-bottom: 15px;">
+        <span class="material-symbols-rounded MoreMenuIcon">edit</span>
+        <span class="MoreMenuLabel">Customise Menu</span>
+      </div>
+      <div class="MoreMutableInteractable MoreMenuShow">
+      </div>
+    </div>
+
+    <h1 style="margin-left: 1rem;">Pure CSS Expandable List</h1>
+
+    <!-- I probably shouldn't have hard-coded these because its ugly
+         but it should be fine for demo purposes... -->
+
+    <h2>Short (≤ 10)</h2>
+
+    <div class="ExList">
+      <span class="ExListName">Meat Lasagna Recipe</span>
+      <input type="checkbox" class="ExListHandle" id="ExListHandleShort" />
+      <ul class="ExListItems">
+
+        <li><input type="checkbox"> 1 pound sweet Italian sausage</li>
+        <li><input type="checkbox"> 3/4 pound lean ground beef</li>
+        <li><input type="checkbox"> 1/2 cup minced onion</li>
+        <li><input type="checkbox"> 2 cloves garlic, crush</li>
+        <li><input type="checkbox"> 1 (28 ounce) can crushed tomatoes</li>
+        <li><input type="checkbox"> 2 (6 ounce) cans tomato paste</li>
+        <li><input type="checkbox"> 2 (6.5 ounce) cans canned tomato sauce</li>
+        <li><input type="checkbox"> 1/2 cup water</li>
+        <li><input type="checkbox"> 2 tablespoons white sugar</li>
+        <li><input type="checkbox"> 1 1/2 teaspoons dried basil leaves</li>
+      </ul>
+      <label for="ExListHandleShort"></label>
+    </div>
+
+    <h2>Long (≥ 10)</h2>
+
+    <div class="ExList">
+      <span class="ExListName">Meat Lasagna Recipe</span>
+      <input type="checkbox" class="ExListHandle" id="ExListHandleLong" />
+      <ul class="ExListItems">
+        <li><input type="checkbox"> 1 pound sweet Italian sausage</li>
+        <li><input type="checkbox"> 3/4 pound lean ground beef</li>
+        <li><input type="checkbox"> 1/2 cup minced onion</li>
+        <li><input type="checkbox"> 2 cloves garlic, crush</li>
+        <li><input type="checkbox"> 1 (28 ounce) can crushed tomatoes</li>
+        <li><input type="checkbox"> 2 (6 ounce) cans tomato paste</li>
+        <li><input type="checkbox"> 2 (6.5 ounce) cans canned tomato sauce</li>
+        <li><input type="checkbox"> 1/2 cup water</li>
+        <li><input type="checkbox"> 2 tablespoons white sugar</li>
+        <li><input type="checkbox"> 1 1/2 teaspoons dried basil leaves</li>
+        <li><input type="checkbox"> 1/2 teaspoon fennel seeds</li>
+        <li><input type="checkbox"> 1 teaspoon Italian seasoning</li>
+        <li><input type="checkbox"> 1 1/2 teaspoons salt, divided, or to taste</li>
+        <li><input type="checkbox"> 1/4 teaspoon ground black pepper</li> 
+        <li><input type="checkbox"> 4 tablespoons chopped fresh parsley</li>
+        <!-- Past this point, we go over 15 items -->
+        <!-- <li><input type="checkbox"> 12 lasagna noodles</li>
+        <li><input type="checkbox"> 16 ounces ricotta cheese</li>
+        <li><input type="checkbox"> 1 egg</li>
+        <li><input type="checkbox"> 3/4 pound mozzarella cheese, sliced</li>
+        <li><input type="checkbox"> 3/4 cup grated Parmesan cheese</li>
+        <li><input type="checkbox"> 2 cloves garlic, crushed</li> -->
+        <label for="ExListHandleLong" class="ExListHandleLabel"></label>
+      </ul>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@shopify/draggable@1.0.0-beta.12/lib/sortable.js"></script>
+    <script src="./js/Consts.js"></script>
+    <script src="./js/Utils.js"></script>
+    <script src="./js/App.js"></script>
+  </body>
+</html>
