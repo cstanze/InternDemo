@@ -73,7 +73,7 @@ const clearElementChildren = (target) => {
 
 const anyParentHasClass = (el, className) => {
   // recursively check if any parent has the class
-  if (el.classList.contains(className)) {
+  if (el.classList && el.classList.contains(className)) {
     return true
   }
 
@@ -84,9 +84,22 @@ const anyParentHasClass = (el, className) => {
   return false
 }
 
+const findParentOfClass = (el, className) => {
+  // recursively check if any parent has the class
+  if (el.classList && el.classList.contains(className)) {
+    return el
+  }
+
+  if (el.parentElement) {
+    return findParentOfClass(el.parentElement, className)
+  }
+
+  return null
+}
+
 const anyChildHasClass = (el, className) => {
   // recursively check if any child has the class
-  if (el.classList.contains(className)) {
+  if (el.classList && el.classList.contains(className)) { // note the `el.classList` check, text nodes don't have classList
     return true
   }
 

@@ -92,6 +92,16 @@ const render = (target) => {
     document.querySelectorAll('.MoreMenuShow')
   )
 
+  // before updating the rest, update editing index
+  for (let i = 0; i < menu.children.length; i++) {
+    console.log(i, menu.children[i].classList.contains('LinkItemEditing'))
+    console.log(menu.children[i])
+    if (menu.children[i].classList.contains('LinkItemEditing')) {
+      AppState.editingIndex = i // just in case it was reordered
+      break
+    }
+  }
+
   // create the form section for Adding/Editing link items
   let mutatingSection = document.querySelector('.MoreMutableInteractable')
   if (AppState.mode = AppModes.Open) {
@@ -204,7 +214,6 @@ const render = (target) => {
     appendElements(mutatingSection, [sectionLabel, dynamicForm, controls])
   }
 
-  
   // clear all the link items for rendering
   clearElementChildren(menu)
 
@@ -254,18 +263,31 @@ const render = (target) => {
     let inner = newDiv(['LinkItemInner'], [left, right], {
       "data-index": i
     })
-
+    
     let el = newDiv(['LinkItem'], [inner])
+    if (AppState.editingIndex == i) {
+      inner.setAttribute('data-editing', '')
+      addClassIf('LinkItemEditing', true, [el])
+    }
+
+
 
     // fuzzy match on classes available on parents or children
     inner.addEventListener('click', e => {
+      if (!AppState.editable) {
+        return;
+      }
+
+      let inner = findParentOfClass(e.target, 'LinkItemInner')
+      let el = findParentOfClass(e.target, 'LinkItem')
+
       if (anyParentHasClass(e.target, 'LinkItemCheck')) { // enable/disable checkmark
         linkItem.enabled = e.target.checked
         localStorage.setItem('user.linkItems', JSON.stringify(AppState.linkItems))
-
+        
         icon.innerText = linkItem.enabled ? "drag_indicator" : "delete"
       }
-
+      
       if (anyChildHasClass(e.target, 'material-symbols-rounded') && AppState.editable) { // delete functionality
         let id = inner.getAttribute('data-index')
         if (!AppState.linkItems[id].enabled) {
@@ -275,14 +297,20 @@ const render = (target) => {
         }
       }
 
+      let oldEl = document.querySelector('[data-editing=""]')
+      if (oldEl) {
+        removeClass('LinkItemEditing', [oldEl.parentElement])
+        oldEl.removeAttribute('data-editing')
+      }
 
       // toggle link editing on every click
-      if (AppState.addingItem) {
-        AppState.editingIndex = inner.getAttribute('data-index')
+      if (AppState.addingItem || AppState.editingIndex != inner.getAttribute('data-index')) {
+        AppState.editingIndex = Number(inner.getAttribute('data-index'))
+        AppState.addingItem = false
       } else {
         AppState.editingIndex = -1
+        AppState.addingItem = true
       }
-      AppState.addingItem = !AppState.addingItem
       render(target)
     })
 

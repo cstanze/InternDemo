@@ -115,7 +115,8 @@ body {
 }
 
 .LinkItem:hover,
-.MoreMenuItem:not(.NoHover):hover {
+.MoreMenuItem:not(.NoHover):hover,
+.LinkItemEditing {
   background-color: hsl(var(--text-hsl), 0.1);
 }
 
