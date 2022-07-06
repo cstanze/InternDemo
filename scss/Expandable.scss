@@ -1,0 +1,94 @@
+$itemLineHeight: 16px;
+$itemFontSize: 16px;
+
+.ExList {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #000;
+  border-radius: 10px;
+  width: fit-content;
+  padding: 10px;
+  margin: 10px;
+  overflow: hidden;
+}
+
+.ExListName {
+  font-size: 1.5rem;
+  align-self: flex-start;
+}
+
+.ExListItems {
+  display: block;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  font-size: $itemFontSize;
+  line-height: $itemLineHeight;
+
+  > ::marker {
+    content: '';
+  }
+}
+
+// faux checkbox...
+// the old checkbox method messed up the calculations
+ul.ExListItems li {
+  list-style: none;
+  position: relative;
+  margin-left: 15px;
+
+  &:after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: -15px;
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+    border: 1px solid #000;
+  }
+}
+
+.ExListHandleTop,
+.ExListHandleBottom {
+  visibility: hidden;
+  width: 100%;
+  font-size: 1rem;
+  text-align: center;
+  cursor: pointer;
+  position: relative;
+
+  &:after {
+    content: 'Show less';
+    visibility: hidden;
+    position: absolute;
+    line-height: $itemLineHeight;
+
+    left: 35%;
+  }
+}
+
+.ExListHandleTop {
+  ~ .ExListItems {
+    max-height: $itemLineHeight * 10;
+  }
+
+  &:checked ~ .ExListItems {
+    max-height: unset;
+    height: auto;
+  }
+
+  &:checked ~ .ExListHandleBottom:after {
+    visibility: visible;
+  }
+  
+  &:after {
+    content: 'Show more';
+    visibility: visible;
+    top: $itemLineHeight * 11;
+  }
+
+  &:checked:after {
+    visibility: hidden;
+  }
+}

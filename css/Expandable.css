@@ -1,89 +1,82 @@
-/* List styling (similar to PDF example) */
 .ExList {
   display: flex;
   flex-direction: column;
-  align-items: center;
   border: 1px solid #000;
   border-radius: 10px;
   width: fit-content;
-  padding: 5px 10px 10px 10px;
+  padding: 10px;
   margin: 10px;
+  overflow: hidden;
 }
 
-/* Follows the same loose guide on the PDF */
 .ExListName {
-  margin: 0;
-  margin-top: 5px;
   font-size: 1.5rem;
   align-self: flex-start;
 }
 
-/* also loose styling here, makes it cleaner too */
 .ExListItems {
-  margin: 5px 0 5px 0;
+  display: block;
+  margin: 0;
   padding: 0;
-  padding-left: 5px;
+  overflow: hidden;
+  font-size: 16px;
+  line-height: 16px;
+}
+.ExListItems > ::marker {
+  content: "";
 }
 
-.ExListItems > li:not(:first-child) {
-  margin-top: 10px;
+ul.ExListItems li {
+  list-style: none;
+  position: relative;
+  margin-left: 15px;
+}
+ul.ExListItems li:after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: -15px;
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  border: 1px solid #000;
 }
 
-.ExListItems > li::marker {
-  content: '';
-}
-
-/* Hide the checkbox but modify the label (sort of) */
-.ExListHandle {
+.ExListHandleTop,
+.ExListHandleBottom {
   visibility: hidden;
   width: 100%;
   font-size: 1rem;
   text-align: center;
+  cursor: pointer;
+  position: relative;
+}
+.ExListHandleTop:after,
+.ExListHandleBottom:after {
+  content: "Show less";
+  visibility: hidden;
+  position: absolute;
+  line-height: 16px;
+  left: 35%;
 }
 
-/* Hide label on 11 items or less */
-.ExListItems > li:nth-last-child(-n+11):first-child ~ .ExListHandleLabel {
-  display: none;
+.ExListHandleTop ~ .ExListItems {
+  max-height: 160px;
 }
-
-/* Show label on More than 11 items */
-.ExListItems > li:nth-last-child(n+10) ~ li + .ExListHandleLabel {
-  display: block;
+.ExListHandleTop:checked ~ .ExListItems {
+  max-height: unset;
+  height: auto;
 }
-
-/* Checked? Show the extra */
-.ExListHandle:checked ~ .ExListItems > li:nth-child(n+11) {
-  display: block;
-}
-
-/* Unchecked? Hide the extra */
-.ExListHandle ~ .ExListItems > li:nth-child(n+11) {
-  display: none;
-}
-
-/* Label */
-.ExListHandleLabel:after {
-  margin-top: 10px;
-  text-align: center;
-}
-
-.ExListHandle + .ExListItems > .ExListHandleLabel:after {
-  display: block;
+.ExListHandleTop:checked ~ .ExListHandleBottom:after {
   visibility: visible;
-  content: 'Show more';
-  margin-left: 5px;
 }
-
-.ExListHandle:checked + .ExListItems > .ExListHandleLabel:after {
+.ExListHandleTop:after {
+  content: "Show more";
   visibility: visible;
-  content: 'Show less';
-  margin-left: 5px;
+  top: 176px;
+}
+.ExListHandleTop:checked:after {
+  visibility: hidden;
 }
 
-/*
-  I won't lie, that part above took me longer than I'd like.
-  Main reason being that I didn't use labels before. They're
-  not as clean because of all the IDs involved but it works
-  and could be adapted to work in a production scenario
- */
-
+/*# sourceMappingURL=Expandable.css.map */
