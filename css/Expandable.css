@@ -20,7 +20,7 @@
   padding: 0;
   overflow: hidden;
   font-size: 16px;
-  line-height: 16px;
+  line-height: 18px;
 }
 .ExListItems > ::marker {
   content: "";
@@ -44,8 +44,8 @@ ul.ExListItems li:after {
 
 .ExListHandleTop,
 .ExListHandleBottom {
-  visibility: hidden;
   width: 100%;
+  visibility: hidden;
   font-size: 1rem;
   text-align: center;
   cursor: pointer;
@@ -56,12 +56,12 @@ ul.ExListItems li:after {
   content: "Show less";
   visibility: hidden;
   position: absolute;
-  line-height: 16px;
+  line-height: 18px;
   left: 35%;
 }
 
 .ExListHandleTop ~ .ExListItems {
-  max-height: 160px;
+  max-height: 198px;
 }
 .ExListHandleTop:checked ~ .ExListItems {
   max-height: unset;
@@ -73,7 +73,7 @@ ul.ExListItems li:after {
 .ExListHandleTop:after {
   content: "Show more";
   visibility: visible;
-  top: 176px;
+  top: 218px;
 }
 .ExListHandleTop:checked:after {
   visibility: hidden;

@@ -1,4 +1,4 @@
-$itemLineHeight: 16px;
+$itemLineHeight: 18px;
 $itemFontSize: 16px;
 
 .ExList {
@@ -51,8 +51,8 @@ ul.ExListItems li {
 
 .ExListHandleTop,
 .ExListHandleBottom {
-  visibility: hidden;
   width: 100%;
+  visibility: hidden; // hide the radio buttons
   font-size: 1rem;
   text-align: center;
   cursor: pointer;
@@ -60,7 +60,7 @@ ul.ExListItems li {
 
   &:after {
     content: 'Show less';
-    visibility: hidden;
+    visibility: hidden; // hide the text until needed
     position: absolute;
     line-height: $itemLineHeight;
 
@@ -70,7 +70,7 @@ ul.ExListItems li {
 
 .ExListHandleTop {
   ~ .ExListItems {
-    max-height: $itemLineHeight * 10;
+    max-height: $itemLineHeight * 11;
   }
 
   &:checked ~ .ExListItems {
@@ -79,16 +79,16 @@ ul.ExListItems li {
   }
 
   &:checked ~ .ExListHandleBottom:after {
-    visibility: visible;
+    visibility: visible; // show the 'Show less' text when needed
   }
   
   &:after {
     content: 'Show more';
-    visibility: visible;
-    top: $itemLineHeight * 11;
+    visibility: visible; // show the 'Show more' text
+    top: $itemLineHeight * 12 + 2px; // the +2px is to account for a tiny bit of the text showing up inside the box
   }
 
   &:checked:after {
-    visibility: hidden;
+    visibility: hidden; // hide the 'Show more' text when not needed
   }
 }
