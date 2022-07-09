@@ -1,6 +1,7 @@
 $itemLineHeight: 18px;
 $itemFontSize: 16px;
 
+// Normal styling from here
 .ExList {
   display: flex;
   flex-direction: column;
@@ -17,13 +18,16 @@ $itemFontSize: 16px;
   align-self: flex-start;
 }
 
+// here is where it gets odd...
 .ExListItems {
   display: block;
   margin: 0;
   padding: 0;
   overflow: hidden;
+  // font size is actually really important. especially when paired with the line height
+  // typography is really interesting to learn about...
   font-size: $itemFontSize;
-  line-height: $itemLineHeight;
+  line-height: $itemLineHeight; // keeping the standard for calculations later
 
   > ::marker {
     content: '';
@@ -31,7 +35,7 @@ $itemFontSize: 16px;
 }
 
 // faux checkbox...
-// the old checkbox method messed up the calculations
+// the old checkbox method messed up the calculations somehow...
 ul.ExListItems li {
   list-style: none;
   position: relative;
@@ -51,30 +55,30 @@ ul.ExListItems li {
 
 .ExListHandleTop,
 .ExListHandleBottom {
-  width: 100%;
+  width: 100%; // I forgot what caused this to be here...
   visibility: hidden; // hide the radio buttons
-  font-size: 1rem;
+  font-size: 1rem; // should this have been the same font size as the items?
   text-align: center;
   cursor: pointer;
-  position: relative;
+  position: relative; // make it easier to position the label
 
   &:after {
     content: 'Show less';
     visibility: hidden; // hide the text until needed
     position: absolute;
-    line-height: $itemLineHeight;
+    line-height: $itemLineHeight; // also important for calculations
 
-    left: 35%;
+    left: 35%; // kind of arbitrary, it centers the label. not sure if this'll need to be changed. i doubt it
   }
 }
 
 .ExListHandleTop {
   ~ .ExListItems {
-    max-height: $itemLineHeight * 11;
+    max-height: $itemLineHeight * 11; // limit the height to 11 elements
   }
 
   &:checked ~ .ExListItems {
-    max-height: unset;
+    max-height: unset; // expand it all the way when 'Show more' is active
     height: auto;
   }
 
@@ -86,6 +90,7 @@ ul.ExListItems li {
     content: 'Show more';
     visibility: visible; // show the 'Show more' text
     top: $itemLineHeight * 12 + 2px; // the +2px is to account for a tiny bit of the text showing up inside the box
+    // the reason for using 12 is because it'll hide if the item count is <= 10.
   }
 
   &:checked:after {
